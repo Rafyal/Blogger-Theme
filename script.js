@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeToggle");
 
   // 🔹 Ganti ini dengan URL feed blog kamu (pakai blogspot, bukan custom domain)
-  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json&max-results=5";
+  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json";
 
   fetch(feedUrl)
     .then(res => res.json())
@@ -74,3 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
