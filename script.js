@@ -6,14 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeSidebar = document.getElementById("closeSidebar");
   const themeToggle = document.getElementById("themeToggle");
 
-  // 🔹 Feed Blogger kamu
-  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json&max-results=5
-";
+  // 🔹 Ganti ini dengan URL feed blog kamu (pakai blogspot, bukan custom domain)
+  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json&max-results=5";
 
   fetch(feedUrl)
     .then(res => res.json())
     .then(data => {
       const entries = data.feed?.entry || [];
+      console.log("Feed entries:", entries); // debug
+
       postsContainer.innerHTML = "";
       myPostsContainer.innerHTML = "";
 
@@ -26,12 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>`;
       } else {
         entries.forEach(entry => {
-          const title = entry.title.$t;
+          const title = entry.title?.$t || "Tanpa Judul";
           const link = entry.link.find(l => l.rel === "alternate").href;
+
+          // 🔹 Ambil isi content atau summary
           const content = entry.content?.$t || entry.summary?.$t || "";
+
+          // 🔹 Cari gambar di dalam konten
           const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
           const img = imgMatch ? imgMatch[1] : "https://via.placeholder.com/300x200";
 
+          // 🔹 Tambahkan ke homepage
           postsContainer.insertAdjacentHTML("beforeend", `
             <div class="post-card">
               <img src="${img}" alt="${title}"/>
@@ -40,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           `);
 
+          // 🔹 Tambahkan ke sidebar
           myPostsContainer.insertAdjacentHTML("beforeend", `
             <li><a href="${link}">${title}</a></li>
           `);
@@ -67,5 +74,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-
