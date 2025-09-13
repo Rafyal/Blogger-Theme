@@ -41,45 +41,62 @@ themeSwitcher.addEventListener("click", () => {
   }
 });
 
-async function loadBloggerPosts() {
+document.addEventListener("DOMContentLoaded", () => {
+  const postsContainer = document.querySelector(".posts");
+  const myPostsContainer = document.getElementById("my-posts");
+  const sidebar = document.getElementById("sidebar");
+  const menuToggle = document.getElementById("menuToggle");
+  const closeSidebar = document.getElementById("closeSidebar");
+  const themeToggle = document.getElementById("themeToggle");
+
+  // Ganti dengan alamat blogmu
   const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json";
 
-  try {
-    const res = await fetch(feedUrl);
-    const data = await res.json();
-    const entries = data.feed.entry || [];
+  // Load postingan
+  fetch(feedUrl)
+    .then(res => res.json())
+    .then(data => {
+      const entries = data.feed.entry || [];
+      postsContainer.innerHTML = "";
+      myPostsContainer.innerHTML = "";
 
-    const postsContainer = document.querySelector('.posts');
-    postsContainer.innerHTML = ""; // kosongkan dummy post
+      entries.forEach(entry => {
+        const title = entry.title.$t;
+        const link = entry.link.find(l => l.rel === "alternate").href;
+        const content = entry.content ? entry.content.$t : "";
+        const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+        const img = imgMatch ? imgMatch[1] : "https://via.placeholder.com/300x200";
 
-    entries.forEach(entry => {
-      const title = entry.title.$t;
-      const link = entry.link.find(l => l.rel === "alternate").href;
-      const summary = entry.summary ? entry.summary.$t.replace(/<[^>]*>/g, "").slice(0, 100) + "..." : "";
+        // Post card di homepage
+        const card = `
+          <div class="post-card">
+            <img src="${img}" alt="${title}"/>
+            <h3>${title}</h3>
+            <a href="${link}" class="read-more">Baca Selengkapnya</a>
+          </div>
+        `;
+        postsContainer.insertAdjacentHTML("beforeend", card);
 
-      // ambil gambar (kalau ada)
-      let image = "https://via.placeholder.com/500x300?text=No+Image";
-      if (entry.media$thumbnail) {
-        image = entry.media$thumbnail.url.replace("/s72-c/", "/s500/");
-      }
-
-      // buat card
-      const article = document.createElement("article");
-      article.className = "post-card";
-      article.innerHTML = `
-        <img src="${image}" alt="${title}" />
-        <div class="post-card-content">
-          <h3>${title}</h3>
-          <p>${summary}</p>
-          <a href="${link}" target="_blank">Baca Selengkapnya</a>
-        </div>
-      `;
-      postsContainer.appendChild(article);
+        // Post list di sidebar
+        const li = `<li><a href="${link}">${title}</a></li>`;
+        myPostsContainer.insertAdjacentHTML("beforeend", li);
+      });
+    })
+    .catch(err => {
+      postsContainer.innerHTML = "<p>Gagal memuat postingan.</p>";
+      console.error(err);
     });
-  } catch (err) {
-    console.error("Gagal memuat postingan Blogger:", err);
-  }
-}
+
+  // Sidebar toggle
+  menuToggle.addEventListener("click", () => sidebar.classList.add("active"));
+  closeSidebar.addEventListener("click", () => sidebar.classList.remove("active"));
+
+  // Theme toggle
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-theme");
+  });
+});
 
 // jalankan setelah DOM siap
 document.addEventListener("DOMContentLoaded", loadBloggerPosts);
+
