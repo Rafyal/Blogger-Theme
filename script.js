@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeToggle");
 
   // 🔹 Feed Blogger kamu
-  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json";
+  const feedUrl = "https://onperspectiveside.blogspot.com/feeds/posts/default?alt=json&max-results=5
+";
 
   fetch(feedUrl)
     .then(res => res.json())
@@ -66,3 +67,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
