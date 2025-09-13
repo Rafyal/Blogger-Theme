@@ -95,102 +95,111 @@ header input {
 }
 
 /* ========== POSTINGAN TERBARU ========== */
-.section-title {
-  margin: 20px;
-  font-size: 1.4rem;
-  font-weight: 700;
-}
 .posts {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 0 20px 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
 }
+
 .post-card {
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.6);
   backdrop-filter: blur(10px);
-  transition: transform 0.3s, background 0.3s;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 1rem;
+  transition: transform 0.3s;
 }
+
+.dark-theme .post-card {
+  background: rgba(20,20,30,0.6);
+}
+
 .post-card:hover {
   transform: translateY(-5px);
 }
+
 .post-card img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: .8rem;
 }
-.post-card-content {
-  padding: 15px;
+
+.post-card h3 {
+  margin: 0 0 .5rem;
 }
-.post-card-content a {
-  color: var(--accent-color, #007bff);
-  font-weight: 600;
+
+.read-more {
+  display: inline-block;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  background: #0077ff;
+  color: white;
   text-decoration: none;
-  transition: color 0.3s;
 }
-.post-card-content a:hover {
-  color: #0056b3;
+.read-more:hover {
+  background: #005fcc;
 }
+
 
 /* ========== MENU GARIS TIGA (SIDEBAR) ========== */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: -320px;
   width: 300px;
   height: 100%;
-  background: rgba(20, 20, 20, 0.85);
-  backdrop-filter: blur(15px);
-  border-radius: 12px 0 0 12px;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
-  transition: right 0.3s ease;
-  padding: 20px;
-  color: inherit;
-  overflow-y: auto;
-  z-index: 2000;
-}
-.sidebar.active {
-  right: 0;
-}
-.sidebar img.profile {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-.sidebar .post-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-radius: 10px;
-  padding: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.sidebar .post-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-.sidebar button {
-  margin-top: 15px;
-  padding: 10px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s, color 0.3s;
-}
-.sidebar button.primary {
-  background: var(--accent-color, #007bff);
-  color: #fff;
-}
-.sidebar button.primary:hover {
-  background: #0056b3;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  transition: right .3s ease;
+  padding: 1rem;
 }
 
+.sidebar.active { right: 0; }
+.dark-theme .sidebar { background: rgba(20,20,30,0.7); }
+
+.sidebar .profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.sidebar .primary {
+  display: block;
+  padding: .5rem 1rem;
+  background: #0077ff;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.sidebar .close-btn {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+body {
+  background-color: #f5f8ff;
+  background-image: radial-gradient(#ddd 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+}
+
+.dark-theme {
+  background-color: #0e1a2b;
+  background-image: radial-gradient(#444 1px, transparent 1px);
+  color: #eee;
+}
 /* Sidebar header with close button */
 .sidebar-header {
   display: flex;
@@ -251,14 +260,17 @@ body.dark-theme .sidebar {
 }
 
 /* ========== FOOTER ========== */
+/* Footer */
 footer {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
+  margin-top: 2rem;
+  padding: 1rem;
   text-align: center;
-  padding: 15px;
-  margin: 20px;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 12px 12px 0 0;
+}
+.dark-theme footer {
+  background: rgba(20,20,30,0.6);
 }
 
 /* ========== THEME SWITCHER FLOATING ========== */
@@ -281,3 +293,4 @@ footer {
   background: #0056b3;
   transform: scale(1.1);
 }
+
