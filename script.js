@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
           const title = entry.title.$t;
           const link = entry.link.find(l => l.rel === "alternate").href;
-          const content = entry.content?.$t || "";
+          const content = entry.content?.$t || entry.summary?.$t || "";
           const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
           const img = imgMatch ? imgMatch[1] : "https://via.placeholder.com/300x200";
 
@@ -67,4 +67,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
